@@ -94,7 +94,7 @@ def main():
 
 def app_menu():
     st.sidebar.header(f"Logged in as: {st.session_state.role}")
-    menu_options = ["Queue Management", "Bed Availability", "Patient Admission", "Discharge Patient"]
+    menu_options = ["Queue Management", "Bed Availability", "Patient Admission", "Discharge Patient", "AI Chatbot"]
     if st.session_state.role == "Admin":
         menu_options.append("Admin Dashboard")
     menu = st.sidebar.selectbox("Menu", menu_options)
@@ -106,6 +106,8 @@ def app_menu():
         patient_admission()
     elif menu == "Discharge Patient":
         discharge_patient()
+    elif menu == "AI Chatbot":
+        ai_chatbot()
     elif menu == "Admin Dashboard" and st.session_state.role == "Admin":
         admin_dashboard()
 
@@ -260,6 +262,27 @@ def admin_dashboard():
             st.session_state.beds = pd.concat([st.session_state.beds, new_bed], ignore_index=True)
         st.success("System data reset complete!")
         st.rerun()
+def ai_chatbot():
+    st.header("🤖 Ask the Hospital AI Assistant")
+    st.markdown("This assistant is powered by Hugging Face. Ask about admissions, priorities, triage, or anything else!")
+
+    with st.expander("💡 How to Use the AI Assistant"):
+        st.markdown("""
+        - Use it like ChatGPT. Ask anything related to hospital policies, patient triage, system guidance, etc.
+        - Examples:
+          - *“How does patient priority work?”*
+          - *“What is the policy for emergency admissions?”*
+        """)
+
+    st.markdown("""
+    <iframe
+        src="https://hf.co/chat/assistant/68597a76683a7f9084cc05be"
+        width="100%"
+        height="600"
+        frameborder="0"
+        allow="clipboard-write"
+    ></iframe>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
